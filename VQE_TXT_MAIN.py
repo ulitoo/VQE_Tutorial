@@ -65,15 +65,17 @@ class CircuitGridModel():
         self.max_columns = max_columns
         self.nodes = np.empty((max_wires, max_columns),
                                 dtype = CircuitGridNode)
-
-    def set_node(self, wire_num, column_num, circuit_grid_node):
-        ###################################################################
-        # put node in circuit
-        ###################################################################
-        # First, embed the wire and column locations in the node
-        circuit_grid_node.wire_num = wire_num
-        circuit_grid_node.column_num = column_num
-        self.nodes[wire_num][column_num] = circuit_grid_node
+        for column_num in range(self.max_columns):
+            for wire_num in range(self.max_wires):
+                if column_num % 5 == 0:
+                    self.nodes[wire_num][column_num] = CircuitGridNode(Y, np.pi)
+                    self.nodes[wire_num][column_num].wire_num = wire_num
+                    self.nodes[wire_num][column_num].column_num = column_num
+                else: 
+                    if wire_num != 0 and wire_num == column_num % 5:
+                        self.nodes[wire_num][column_num] = CircuitGridNode(X, 0, wire_num-1)
+                        self.nodes[wire_num][column_num].wire_num = wire_num
+                        self.nodes[wire_num][column_num].column_num = column_num
 
     def get_rotation_gate_nodes(self):
         ###################################################################
@@ -104,12 +106,12 @@ class CircuitGridModel():
             for wire_num in range(self.max_wires):
                 node = self.nodes[wire_num][column_num]
                 if node:
-                    if node.node_type == X:
+                    if node.node_type == X: qc.cx(qr[node.ctrl_a], qr[wire_num])
                         # Controlled X gate
-                        qc.cx(qr[node.ctrl_a], qr[wire_num])
-                    elif node.node_type == Y:
+                        #qc.cx(qr[node.ctrl_a], qr[wire_num])
+                    elif node.node_type == Y: qc.ry(node.radians, qr[wire_num])
                         # Rotation around Y axis
-                        qc.ry(node.radians, qr[wire_num])
+                        #qc.ry(node.radians, qr[wire_num])
         return qc
 
 class ExpectationGrid():
@@ -243,59 +245,7 @@ initial_adj_matrix = np.array([
 #################################################################################################
 # MONTAR EL CIRCUITO INICIAL que pasa de |00000> al estado cuantico ansatz
 #################################################################################################
-
 circuit_grid_model = CircuitGridModel(NUM_QUBITS, 21)
-
-circuit_grid_model.set_node(0, 0, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(1, 0, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(2, 0, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(3, 0, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(4, 0, CircuitGridNode(Y, np.pi))
-
-circuit_grid_model.set_node(1, 1, CircuitGridNode(X, 0, 0))
-circuit_grid_model.set_node(2, 2, CircuitGridNode(X, 0, 1))
-circuit_grid_model.set_node(3, 3, CircuitGridNode(X, 0, 2))
-circuit_grid_model.set_node(4, 4, CircuitGridNode(X, 0, 3))
-
-circuit_grid_model.set_node(0, 5, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(1, 5, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(2, 5, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(3, 5, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(4, 5, CircuitGridNode(Y, np.pi))
-
-circuit_grid_model.set_node(1, 6, CircuitGridNode(X, 0, 0))
-circuit_grid_model.set_node(2, 7, CircuitGridNode(X, 0, 1))
-circuit_grid_model.set_node(3, 8, CircuitGridNode(X, 0, 2))
-circuit_grid_model.set_node(4, 9, CircuitGridNode(X, 0, 3))
-
-circuit_grid_model.set_node(0, 10, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(1, 10, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(2, 10, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(3, 10, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(4, 10, CircuitGridNode(Y, np.pi))
-
-circuit_grid_model.set_node(1, 11, CircuitGridNode(X, 0, 0))
-circuit_grid_model.set_node(2, 12, CircuitGridNode(X, 0, 1))
-circuit_grid_model.set_node(3, 13, CircuitGridNode(X, 0, 2))
-circuit_grid_model.set_node(4, 14, CircuitGridNode(X, 0, 3))
-
-circuit_grid_model.set_node(0, 15, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(1, 15, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(2, 15, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(3, 15, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(4, 15, CircuitGridNode(Y, np.pi))
-
-circuit_grid_model.set_node(1, 16, CircuitGridNode(X, 0, 0))
-circuit_grid_model.set_node(2, 17, CircuitGridNode(X, 0, 1))
-circuit_grid_model.set_node(3, 18, CircuitGridNode(X, 0, 2))
-circuit_grid_model.set_node(4, 19, CircuitGridNode(X, 0, 3))
-
-circuit_grid_model.set_node(0, 20, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(1, 20, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(2, 20, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(3, 20, CircuitGridNode(Y, np.pi))
-circuit_grid_model.set_node(4, 20, CircuitGridNode(Y, np.pi))
-
 circuit = circuit_grid_model.compute_circuit_simple()
 expectation_grid = ExpectationGrid(circuit, initial_adj_matrix)
 
