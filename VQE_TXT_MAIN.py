@@ -27,9 +27,7 @@ from qiskit.aqua.operators.legacy import op_converter as op_c
 # Initializes Optimizacion variables, 1st CIRCUIT , and Expectation grid (hamiltonian based on adjacency matrix)
 #################################################################################################
 NUM_QUBITS = 5
-NUM_STATE_DIMS = 2**NUM_QUBITS
 X = 1 ; Y = 2 ; Z = 3           # Gate Definitions    
-CTRL = 11                       # "control" part of multi-qubit gate
 circuit_grid_model = None
 expectation_grid = None
 optimized_rotations = None
