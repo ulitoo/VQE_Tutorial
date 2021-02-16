@@ -10,7 +10,7 @@ This is a Python Notebook intended to walk the user through the VQE Algorithm
 
 VQE_Tutorial_Part4.NO QPE
 Real device attempts to VQE:
-* [VQE Tutorial (Part IIa) in GitHub](.%2VQE_Tutorial_Part2.Real.ipynb): Same as PartII but all attempts reserving real resources in the cloud.
+* [VQE Tutorial (Part IIa) in GitHub](.%2FVQE_Tutorial_Part2.Real.ipynb): Same as PartII but all attempts reserving real resources in the cloud.
 * [VQE Tutorial (Part IIb) in GitHub](.%2FVQE_Tutorial_Part2.Real.ONCE.ipynb): Same as PartII but attempts reserving real resources for final round.
 
 
