@@ -1,6 +1,6 @@
 # VQE_Tutorial
 Tutorial for Variational Quantum Eigensolver 
-This is part of a final year degree thesis (TFG: Trabajo Fin de Grado) in [UNED](www.uned.es).
+This is part of a final year degree thesis (TFG: Trabajo Fin de Grado) in [UNED](https://www.uned.es).
 
 This is a Python Notebook intended to walk the user through the VQE Algorithm   
 * [VQE Tutorial (Part I) in GitHub](.%2FVQE_Tutorial_Part1.ipynb): Energy estimation 'Peeking' into Ansatz wave function.
